@@ -21,11 +21,28 @@ table.
 • Keep only observations in df1 that match in df2.
 • Drop all observations in df1 that match in df2.
 
-Answer: merge(df1, df2, by="CustId")
+Answer: > df1 = data.frame(CustId = c(1:6), Product = c(rep("TV", 3), rep("Radio", 3)))
+> df2 = data.frame(CustId = c(2, 4, 6), State = c(rep("Texas", 2), rep("NYC", 1)))
+> df1
+  CustId Product
+1      1      TV
+2      2      TV
+3      3      TV
+4      4   Radio
+5      5   Radio
+6      6   Radio
+> df2
+  CustId State
+1      2 Texas
+2      4 Texas
+3      6   NYC
+
+merge(df1, df2, by="CustId")
   CustId Product State
 1      2      TV Texas
 2      4   Radio Texas
 3      6   Radio   NYC
+
 > merge(df1, df2, by="CustId", all=TRUE)
   CustId Product State
 1      1      TV  <NA>
@@ -34,6 +51,7 @@ Answer: merge(df1, df2, by="CustId")
 4      4   Radio Texas
 5      5   Radio  <NA>
 6      6   Radio   NYC
+
 > merge(df1, df2, by="CustId", all.x=TRUE)
   CustId Product State
 1      1      TV  <NA>
@@ -42,17 +60,21 @@ Answer: merge(df1, df2, by="CustId")
 4      4   Radio Texas
 5      5   Radio  <NA>
 6      6   Radio   NYC
+
 > merge(df1, df2, by="CustId", all.y=TRUE)
   CustId Product State
 1      2      TV Texas
 2      4   Radio Texas
 3      6   Radio   NYC
+
 > df3<-merge(df1, df2, by="CustId", all.y=TRUE)
+> df3$State <- NULL
 > df3
-  CustId Product State
-1      2      TV Texas
-2      4   Radio Texas
-3      6   Radio   NYC
+  CustId Product
+1      2      TV
+2      4   Radio
+3      6   Radio
+
 > df1$CustId %in% df2$CustId
 [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE
 > select_index = which(df1$CustId %in% df2$CustId)
