@@ -21,7 +21,8 @@ table.
 • Keep only observations in df1 that match in df2.
 • Drop all observations in df1 that match in df2.
 
-Answer: > df1 = data.frame(CustId = c(1:6), Product = c(rep("TV", 3), rep("Radio", 3)))
+Answer: 
+> df1 = data.frame(CustId = c(1:6), Product = c(rep("TV", 3), rep("Radio", 3)))
 > df2 = data.frame(CustId = c(2, 4, 6), State = c(rep("Texas", 2), rep("NYC", 1)))
 > df1
   CustId Product
@@ -67,6 +68,17 @@ merge(df1, df2, by="CustId")
 2      4   Radio Texas
 3      6   Radio   NYC
 
+> dfx<-merge(df1, df2, by="CustId", all=TRUE)
+> dfx$CustId <- NULL
+> dfx
+  Product State
+1      TV  <NA>
+2      TV Texas
+3      TV  <NA>
+4   Radio Texas
+5   Radio  <NA>
+6   Radio   NYC
+  
 > df3<-merge(df1, df2, by="CustId", all.y=TRUE)
 > df3$State <- NULL
 > df3
